@@ -13,18 +13,24 @@ Internet connection
 1. Create a directory named `projects` in your home directory (`~`):  
     `cd ~`  
     `mkdir projects`  
+    
 2. Clone the [demo](https://github.com/Chenguang-Zhu/demo) repository in the `projects` directory:  
     `cd ~/projects`  
     `git clone https://github.com/Chenguang-Zhu/demo.git`  
+    
 3. Clone the [DoSC](https://github.com/Chenguang-Zhu/DoSC) dataset repository in the `projects` directory:  
     `git clone https://github.com/Chenguang-Zhu/DoSC.git`  
+    
 4. Run the script [genconfigs.py](https://github.com/Chenguang-Zhu/demo/blob/master/scripts/genconfigs.py) to update all the configuration files to reflect the path on your machine:  
     `cd ~/projects/demo/scripts`  
     `./genconfigs.py`  
+    
 5. Create directories for storing Definer logs and Maven logs:  
      `cd ~/projects/demo/_results`  
      `mkdir definer`  
      `mkdir mvn`  
+     
 6. Run the script [run_all.py](https://github.com/Chenguang-Zhu/demo/blob/master/scripts/run_all.py):  
      `cd ~/projects/demo/scripts`  
      `./run_all.py`  
+     
