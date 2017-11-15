@@ -3,11 +3,15 @@
 ### To run the script [run_all.py](https://github.com/Chenguang-Zhu/demo/blob/master/scripts/run_all.py):
 
 #### Requirements
-Python 3.4+ 
-JDK 1.7+ 
-Maven 3.0 or later 
-[CSlier](https://bitbucket.org/liyistc/gitslice/src/ba2f3af1af16ddd98bef31274087681d1c396d07/?at=master) or [Definer](https://bitbucket.org/liyistc/gitslice/src/f978857b4d8d97328eefc21cd39f8d820075a677/?at=opt) binary distribution 
-Internet connection 
+Python 3.4+
+
+JDK 1.7+
+
+Maven 3.0 or later
+
+[CSlier](https://bitbucket.org/liyistc/gitslice/src/ba2f3af1af16ddd98bef31274087681d1c396d07/?at=master) or [Definer](https://bitbucket.org/liyistc/gitslice/src/f978857b4d8d97328eefc21cd39f8d820075a677/?at=opt) binary distribution
+
+Internet connection
 
 #### On Linux
 1. Create a directory named `projects` in your home directory (`~`):
