@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 import os
@@ -62,27 +62,27 @@ def runOneFeature(configfilepath):
     f.close()
 
     os.chdir(DOWNLOADS_DIR + '/' + repo_name)
-    p = sub.Popen([git, 'checkout', end_sha],
+    sub.run([git, 'checkout', end_sha],
                   stdout=open(RESULTS_DIR + '/mvn/' + feature_id + '.mvnlog', 'w'),
                   stderr=open(RESULTS_DIR + '/mvn/' + feature_id + '.mvnlog', 'w')
     )
-    p.wait()
-    p = sub.Popen([mvn, 'clean', 'install', '-DskipTests'],
+    sub.run([mvn, 'clean', 'install', '-DskipTests'],
                   stdout=open(RESULTS_DIR + '/mvn/' + feature_id + '.mvnlog', 'a'),
                   stderr=open(RESULTS_DIR + '/mvn/' + feature_id + '.mvnlog', 'a')
     )
-    p.wait()
     
     start_time = time.time()
-    p = sub.Popen([java, '-jar', DEFINER_JAR_DIR, '-c', configfilepath, '-e', 'refiner', '-l', 'noinv'],
+    p = sub.run([java, '-jar', DEFINER_JAR_DIR, '-c', configfilepath, '-e', 'refiner', '-l', 'noinv'],
                   stdout=open(RESULTS_DIR + '/definer/' + feature_id + '.log', 'w'),
-                  stderr=open(RESULTS_DIR + '/definer/' + feature_id + '.log', 'w')
+                  stderr=open(RESULTS_DIR + '/definer/' + feature_id + '.log', 'w'),
+                  timeout=7200
     )
-    p.wait()
     end_time = time.time()
     elapsed_time = end_time - start_time
+    print('Feature ' + feature_id + ', Starts at ' + str(start_time) + ', Ends at ' + str(end_time) + ', Elapsed time ' + str(elapsed_time))
 
-    print 'Feature ' + feature_id + ', Starts at ' + str(start_time) + ', Ends at ' + str(end_time) + ', Elapsed time ' + str(elapsed_time)
+    if not p.returncode == 0:
+        print('TIMEOUT!\n')
 
 if __name__ == '__main__':
     '''
