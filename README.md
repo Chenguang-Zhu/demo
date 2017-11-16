@@ -6,7 +6,7 @@
 Python 3.4+  
 JDK 1.7+  
 Maven 3.0 or later  
-[CSlier](https://bitbucket.org/liyistc/gitslice/src/ba2f3af1af16ddd98bef31274087681d1c396d07/?at=master) or [Definer](https://bitbucket.org/liyistc/gitslice/src/f978857b4d8d97328eefc21cd39f8d820075a677/?at=opt) binary distribution  
+[CSlier]() or [Definer]() binary distribution  
 Internet connection  
 
 #### On Linux
@@ -17,15 +17,22 @@ Internet connection
     `cd ~`  
     `mkdir projects`  
     
-2. Clone the CSlicer repository in the `projects` directory:  
+2. Clone the [CSlicer](https://bitbucket.org/liyistc/gitslice/src/ba2f3af1af16ddd98bef31274087681d1c396d07/?at=master) repository in the `projects` directory:  
     `cd ~/projects`  
     `git clone https://bitbucket.org/liyistc/gitslice.git`  
 
-3. (OPTIONAL: Do this step only if you want to run definer) Checkout to `opt` branch:
-    `cd gitslice`  
+3. (Optional: Do this step only if you want to run [definer](https://bitbucket.org/liyistc/gitslice/src/f978857b4d8d97328eefc21cd39f8d820075a677/?at=opt)) Checkout to `opt` branch:
+    `cd ~/projects/gitslice`  
     `git checkout opt`  
-    
-4. 
+
+4. Setup external dependencies:  
+    `cd ~/projects/gitslice`  
+    `git submodule init`  
+    `git submodule update`  
+
+5. Build CSlicer (Definer):  
+    `cd ~/projects/gitslice`  
+    `mvn install -DskipTests`  
     
 2. Clone the [demo](https://github.com/Chenguang-Zhu/demo) repository in the `projects` directory:  
     `cd ~/projects`  
