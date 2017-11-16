@@ -10,9 +10,22 @@ Maven 3.0 or later
 Internet connection  
 
 #### On Linux
+0. Setup environment before you start:  
+    Make sure your environment variables `JAVA_HOME` (for Java) and `M2_HOME` (for Maven) are set correctly according to the instructions. 
+
 1. Create a directory named `projects` in your home directory (`~`):  
     `cd ~`  
     `mkdir projects`  
+    
+2. Clone the CSlicer repository in the `projects` directory:  
+    `cd ~/projects`  
+    `git clone https://bitbucket.org/liyistc/gitslice.git`  
+
+3. (OPTIONAL: Do this step only if you want to run definer) Checkout to `opt` branch:
+    `cd gitslice`  
+    `git checkout opt`  
+    
+4. 
     
 2. Clone the [demo](https://github.com/Chenguang-Zhu/demo) repository in the `projects` directory:  
     `cd ~/projects`  
