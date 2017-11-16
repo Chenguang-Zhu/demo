@@ -20,7 +20,7 @@ Internet connection
     `cd ~/projects`  
     `git clone https://bitbucket.org/liyistc/gitslice.git`  
 
-3. (Optional: Do this step only if you want to run [Definer](https://bitbucket.org/liyistc/gitslice/src/f978857b4d8d97328eefc21cd39f8d820075a677/?at=opt)) Checkout to `opt` branch:
+3. (Optional: do this step only if you want to run [Definer](https://bitbucket.org/liyistc/gitslice/src/f978857b4d8d97328eefc21cd39f8d820075a677/?at=opt)) Checkout to `opt` branch:
     `cd ~/projects/gitslice`  
     `git checkout opt`  
 
