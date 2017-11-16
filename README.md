@@ -38,7 +38,7 @@ Internet connection
     `git clone https://github.com/Chenguang-Zhu/demo.git`  
     
 3. Clone the [DoSC](https://github.com/Chenguang-Zhu/DoSC) dataset repository in the `projects` directory:  
-    `cd ~/projects`
+    `cd ~/projects`  
     `git clone https://github.com/Chenguang-Zhu/DoSC.git`  
     
 4. Run the script [genconfigs.py](https://github.com/Chenguang-Zhu/demo/blob/master/scripts/genconfigs.py) to update all the configuration files to reflect the path on your machine:  
