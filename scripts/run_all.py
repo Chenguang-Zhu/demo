@@ -72,11 +72,15 @@ def runOneFeature(configfilepath):
     )
     
     start_time = time.time()
-    p = sub.run([java, '-jar', DEFINER_JAR_DIR, '-c', configfilepath, '-e', 'refiner', '-l', 'noinv'],
+    try:
+        p = sub.run([java, '-jar', DEFINER_JAR_DIR, '-c', configfilepath, '-e', 'refiner', '-l', 'noinv'],
                   stdout=open(RESULTS_DIR + '/definer/' + feature_id + '.log', 'w'),
                   stderr=open(RESULTS_DIR + '/definer/' + feature_id + '.log', 'w'),
                   timeout=7200
-    )
+        )
+    except sub.TimeoutExpired:
+        print('SUBPROCESS KILLED')
+        p.kill()
     end_time = time.time()
     elapsed_time = end_time - start_time
     print('Feature ' + feature_id + ', Starts at ' + str(start_time) + ', Ends at ' + str(end_time) + ', Elapsed time ' + str(elapsed_time))
