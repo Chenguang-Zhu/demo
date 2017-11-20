@@ -27,6 +27,8 @@ if __name__ == '__main__':
     os.chdir(os.path.join(repopath, 'flume-ng-sdk'))
     
     if option == 'compile':
+        rm = which('rm')
+        sub.call ([rm, '-rf', os.path.join(repopath, 'target/classes')])
         ret = sub.call ([mvn, 'compiler:compile'])
         if ret == 0:
             sys.exit(0)
