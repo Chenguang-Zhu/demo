@@ -40,7 +40,7 @@ if __name__ == '__main__':
         
         fbench.close()
 
-    RC_X = sorted(RC_X)
+    #RC_X = sorted(RC_X)
 
     fig, ax = plt.subplots()
     ax.scatter(RC_X, PR_Y, s=80.0, c='blue', marker='*', zorder=3)
