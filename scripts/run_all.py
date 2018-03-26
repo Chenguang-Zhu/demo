@@ -9,7 +9,8 @@ import subprocess as sub
 HOME = os.path.expanduser('~')
 DOWNLOADS_DIR = os.path.join(HOME, 'projects/demo/_downloads')
 RESULTS_DIR = os.path.join(HOME, 'projects/demo/_results')
-CONFIGS_DIR = os.path.join(HOME, 'projects/demo/configs')
+DEFINER_CONFIGS_DIR = os.path.join(HOME, 'projects/demo/configs/definer')
+CSLICER_CONFIGS_DIR = os.path.join(HOME, 'projects/demo/configs/cslicer')
 BUILDSCRIPTS_DIR = os.path.join(HOME, 'projects/demo/buildscripts')
 
 DEFINER_JAR_DIR = os.path.join(HOME, 'projects/gitslice/target/cslicer-1.0.0-jar-with-dependencies.jar')
@@ -49,18 +50,23 @@ git = which('git')
 mvn = which('mvn')
 java = which('java')
 
-def runOneFeature(configfilepath):
+def extarctConfig(configfilepath):
     f = open(configfilepath, 'r')
+    feature_id = configfilepath.split('/')[-1].split('.')[0]
     for line in f.readlines():
         line = line.strip()
         if line.startswith('repoPath ='):
             repo_name = line.split('/')[-2]
         if line.startswith('endCommit ='):
             end_sha = line.split(' = ')[1]
-        if line.startswith('buildScriptPath ='):
-            feature_id = line.split('/')[-1].replace('comp_test_', '').replace('.py', '')
+        #if line.startswith('buildScriptPath ='):
+        #    feature_id = line.split('/')[-1].replace('comp_test_', '').replace('.py', '')
     f.close()
+    return repo_name, end_sha, feature_id
 
+def runOneFeature(configfilepath):
+    repo_name, end_sha, feature_id = extarctConfig(configfilepath)
+    # Build at the end version
     os.chdir(DOWNLOADS_DIR + '/' + repo_name)
     sub.run([git, 'checkout', end_sha],
                   stdout=open(RESULTS_DIR + '/mvn/' + feature_id + '.mvnlog', 'w'),
@@ -83,12 +89,29 @@ def runOneFeature(configfilepath):
         p.kill()
     end_time = time.time()
     elapsed_time = end_time - start_time
-    print('Feature ' + feature_id + ', Starts at ' + str(start_time) + ', Ends at ' + str(end_time) + ', Elapsed time ' + str(elapsed_time))
+    print('Definer: Feature ' + feature_id + ', Starts at ' + str(start_time) + ', Ends at ' + str(end_time) + ', Elapsed time ' + str(elapsed_time))
 
     if not p.returncode == 0:
         print('TIMEOUT!\n')
 
+def runCSlicerOneFeature(configfilepath):
+    repo_name, end_sha, feature_id = extarctConfig(configfilepath)
+    #print (repo_name, end_sha, feature_id)
+
+    start_time = time.time()
+
+    sub.run([java, '-jar', DEFINER_JAR_DIR, '-c', configfilepath, '-e', 'slicer'],
+            stdout=open(RESULTS_DIR + '/cslicer/' + feature_id + '.log', 'w'),
+            stderr=open(RESULTS_DIR + '/cslicer/' + feature_id + '.log', 'w'),
+    )
+    
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+
+    print('CSlicer: Feature ' + feature_id + ', Starts at ' + str(start_time) + ', Ends at ' + str(end_time) + ', Elapsed time ' + str(elapsed_time))
+
 if __name__ == '__main__':
+    tool = sys.argv[1]
     '''
     clean projects
     clone projects
@@ -107,8 +130,15 @@ if __name__ == '__main__':
     os.chdir(DOWNLOADS_DIR)
     for repo in REPO_LIST:
         sub.call([git, 'clone', repo])
-        
-    for dir_path, subpaths, files in os.walk(CONFIGS_DIR, False):
-        for f in files:
-            configfilepath = os.path.join(dir_path, f)
-            runOneFeature(configfilepath)
+
+    if tool == 'definer':
+        for dir_path, subpaths, files in os.walk(DEFINER_CONFIGS_DIR, False):
+            for f in files:
+                configfilepath = os.path.join(dir_path, f)
+                runOneFeature(configfilepath)
+
+    elif tool == 'cslicer':
+        for dir_path, subpaths, files in os.walk(CSLICER_CONFIGS_DIR, False):
+            for f in files:
+                configfilepath = os.path.join(dir_path, f)
+                runCSlicerOneFeature(configfilepath)
